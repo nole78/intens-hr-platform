@@ -20,9 +20,13 @@ namespace Server.Controllers
         [HttpPost]
         public async Task<ActionResult<string>> AddSkill([FromBody] CreateSkillDto dto)
         {
-            // TODO: implement
+            // TODO: improve with Result pattern return type and error handling
             var result = await _skillService.AddSkillAsync(dto);
-            return StatusCode(500, new { message = "Not implemented yet" });
+            if (result == null)
+            {
+                return BadRequest(new { message = "Couldn't create skill" });
+            }
+            return Ok(result);
         }
     }
 }
