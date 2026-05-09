@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Server.Domain.DTOs;
+using Server.Domain.Models;
 using Server.Services.SkillService;
 using System.Threading.Tasks;
 
@@ -18,7 +19,7 @@ namespace Server.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<string>> AddSkill([FromBody] CreateSkillDto dto)
+        public async Task<ActionResult<Skill>> AddSkill([FromBody] CreateSkillDto dto)
         {
             // TODO: improve with Result pattern return type and error handling
             var result = await _skillService.AddSkillAsync(dto);

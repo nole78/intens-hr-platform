@@ -22,7 +22,7 @@ namespace Server.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<string>> AddCandidate(CreateCandidateDto dto)
+        public async Task<ActionResult<Candidate>> AddCandidate(CreateCandidateDto dto)
         {
             // TODO: improve with Result pattern return type and error handling
             var result = await _candidateService.AddCandidateAsync(dto);
@@ -42,7 +42,7 @@ namespace Server.Controllers
         }
 
         [HttpPost("{candidateId}/skills/{skillId}")]
-        public async Task<ActionResult<string>> AddSkillToCandidate(int candidateId,int skillId)
+        public async Task<ActionResult> AddSkillToCandidate(int candidateId,int skillId)
         {
             // TODO: improve with Result pattern return type and error handling
             var result = await _candidateService.AddSkillToCandidateAsync(candidateId, skillId);
