@@ -1,8 +1,10 @@
 ﻿namespace Server.Domain.Models
 {
-    public class CandidateSkil
+    public class CandidateSkill
     {
-        public string SkillId { get; set; } = string.Empty;
-        public string CandidateId { get; set; } = string.Empty;
+        public int SkillId { get; set; }
+        public int CandidateId { get; set; }
+        public Skill Skill { get; set; } = null!;
+        public Candidate Candidate { get; set; } = null!;
     }
 }
