@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Server.Domain.DTOs;
 using Server.Domain.Models;
 using Server.Services.CandidateService;
+using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
 
 
@@ -21,7 +22,7 @@ namespace Server.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<string>> AddCandidate([FromBody] CreateCandidateDto dto)
+        public async Task<ActionResult<string>> AddCandidate(CreateCandidateDto dto)
         {
             // TODO: improve with Result pattern return type and error handling
             var result = await _candidateService.AddCandidateAsync(dto);
@@ -32,20 +33,28 @@ namespace Server.Controllers
             return Ok(result);
         }
 
-        [HttpPatch]
-        public async Task<ActionResult<string>> AddSkillToCandidate([FromQuery] int candidateId,[FromQuery] int skillId)
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> RemoveCandidate(int id)
+        {
+            // TODO: improve with Result pattern return type and error handling
+            var result = await _candidateService.RemoveCandidateAsync(id);
+            return result ? Ok(new { message = "Candidate removed successfully" }) : BadRequest(new { message = "Couldn't remove candidate" });
+        }
+
+        [HttpPost("{candidateId}/skills/{skillId}")]
+        public async Task<ActionResult<string>> AddSkillToCandidate(int candidateId,int skillId)
         {
             // TODO: improve with Result pattern return type and error handling
             var result = await _candidateService.AddSkillToCandidateAsync(candidateId, skillId);
             return Ok(result);
         }
 
-        [HttpDelete]
-        public ActionResult<string> RemoveSkillFromCandidate([FromQuery]int id)
+        [HttpDelete("{candidateId}/skills/{skillId}")]
+        public async Task<ActionResult> RemoveSkillFromCandidate(int candidateId, int skillId)
         {
             // TODO: improve with Result pattern return type and error handling
-            var result = _candidateService.RemoveCandidateAsync(id);
-            return result.Result ? Ok(new { message = "Candidate removed successfully" }) : BadRequest(new { message = "Couldn't remove candidate" });
+            var result = await _candidateService.RemoveSkillFromCandidateAsync(candidateId, skillId);
+            return result ? Ok(new { message = "Skill removed from candidate successfully" }) : BadRequest(new { message = "Couldn't remove skill from candidate" });
         }
 
         [HttpGet]
