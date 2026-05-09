@@ -12,6 +12,9 @@
 
   <ItemGroup>
     <Folder Include="Domain\DTOs\" />
+    <Folder Include="Persistance\Repositories\" />
+    <Folder Include="Services\CandidateController\" />
+    <Folder Include="Services\SkillService\" />
   </ItemGroup>
 
 </Project>
