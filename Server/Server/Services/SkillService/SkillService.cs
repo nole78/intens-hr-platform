@@ -14,12 +14,12 @@ namespace Server.Services.SkillService
         public async Task<Skill> AddSkillAsync(CreateSkillDto dto)
         {
             // TODO: implement Result pattern
-            var exists = await _skillRepository.GetByName(dto.Name);
+            var exists = await _skillRepository.GetByNameAsync(dto.Name);
             if (exists != null)
             {
                 throw new Exception("Skill already exists");
             }
-            return await _skillRepository.AddSkill(new Skill
+            return await _skillRepository.AddSkillAsync(new Skill
             {
                 Name = dto.Name
             });     
