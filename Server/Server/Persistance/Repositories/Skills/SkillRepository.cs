@@ -14,41 +14,20 @@ namespace Server.Persistance.Repositories.Skills
         }
         public async Task<Skill> AddSkill(Skill skill)
         {
-            try
-            {
-                await _context.Skills.AddAsync(skill);
-                await _context.SaveChangesAsync();
-                return skill;
-            }
-            catch
-            {
-                return new Skill();
-            }
+            var added = await _context.Skills.AddAsync(skill);
+            await _context.SaveChangesAsync();
+            return added.Entity;
         }
 
-        public async Task<Skill> GetById(int id)
+        public  Task<Skill?> GetById(int id)
         {
-            try
-            {
-                return await _context.Skills.FirstAsync(s => s.Id == id);
-            }
-            catch
-            {
-                return new Skill();
-            }
+            return _context.Skills.FirstOrDefaultAsync(s => s.Id == id);
         }
 
-        public async Task<Skill> GetByName(string name)
+        public async Task<Skill?> GetByName(string name)
         {
-            try
-            {
-                var normalizedName = name.Trim().ToLower();
-                return await _context.Skills.FirstAsync(s => s.Name.ToLower() == normalizedName);
-            }
-            catch
-            {
-                return new Skill();
-            }
+            var normalizedName = name.Trim().ToLower();
+            return await _context.Skills.FirstOrDefaultAsync(s => s.Name.ToLower() == normalizedName);
         }
     }
 }
