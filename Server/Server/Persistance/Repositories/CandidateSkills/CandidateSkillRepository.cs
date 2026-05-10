@@ -11,7 +11,7 @@ namespace Server.Persistance.Repositories.CandidateSkills
         {
             _context = context;
         }
-        public async Task<bool> AddCandidateSkill(int candidateId, int skillId)
+        public async Task<bool> AddCandidateSkillAsync(int candidateId, int skillId)
         {
             var exists = await _context.CandidateSkills.AnyAsync(cs => cs.CandidateId == candidateId && cs.SkillId == skillId);
 
@@ -28,7 +28,7 @@ namespace Server.Persistance.Repositories.CandidateSkills
             return changes > 0;
         }
 
-        public async Task<bool> DeleteCandidateSkill(int candidateId, int skillId)
+        public async Task<bool> DeleteCandidateSkillAsync(int candidateId, int skillId)
         {
             var candidateSkill = _context.CandidateSkills.FirstOrDefault(cs => cs.CandidateId == candidateId && cs.SkillId == skillId);
         
@@ -39,6 +39,11 @@ namespace Server.Persistance.Repositories.CandidateSkills
 
             var changes = await _context.SaveChangesAsync();
             return changes > 0;
+        }
+
+        public Task<bool> ExistsAsync(int candidateId, int skillId)
+        {
+            return _context.CandidateSkills.AnyAsync(cs => cs.CandidateId == candidateId && cs.SkillId == skillId);
         }
     }
 }

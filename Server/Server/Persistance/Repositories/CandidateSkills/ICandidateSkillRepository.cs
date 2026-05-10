@@ -1,8 +1,11 @@
-﻿namespace Server.Persistance.Repositories.CandidateSkills
+﻿using Server.Domain.Models;
+
+namespace Server.Persistance.Repositories.CandidateSkills
 {
     public interface ICandidateSkillRepository
     {
-        Task<bool> AddCandidateSkill(int candidateId, int skillId);
-        Task<bool> DeleteCandidateSkill(int candidateId, int skillId);
+        Task<bool> AddCandidateSkillAsync(int candidateId, int skillId);
+        Task<bool> DeleteCandidateSkillAsync(int candidateId, int skillId);
+        Task<bool> ExistsAsync(int candidateId, int skillId);
     }
 }
