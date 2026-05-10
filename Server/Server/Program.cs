@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Server.Persistance.Context;
 using Server.Persistance.Repositories.Candidates;
+using Server.Persistance.Repositories.CandidateSkills;
 using Server.Persistance.Repositories.Skills;
 using Server.Services.CandidateService;
 using Server.Services.SkillService;
@@ -9,6 +10,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Repositories
 builder.Services.AddScoped<ISkillRepository, SkillRepository>();
+builder.Services.AddScoped<ICandidateSkillRepository, CandidateSkillRepository>();
 builder.Services.AddScoped<ICandidateRepository, CandidateRepository>();
 
 // Database Context
