@@ -15,7 +15,7 @@ namespace Server.Services.SkillService
         {
             // TODO: implement Result pattern
             var exists = await _skillRepository.GetByName(dto.Name);
-            if (exists.Id != 0)
+            if (exists != null)
             {
                 throw new Exception("Skill already exists");
             }
