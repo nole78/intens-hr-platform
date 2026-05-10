@@ -1,3 +1,5 @@
+using Microsoft.EntityFrameworkCore;
+using Server.Persistance.Context;
 using Server.Persistance.Repositories.Candidates;
 using Server.Persistance.Repositories.Skills;
 using Server.Services.CandidateService;
@@ -8,6 +10,10 @@ var builder = WebApplication.CreateBuilder(args);
 // Repositories
 builder.Services.AddScoped<ISkillRepository, SkillRepository>();
 builder.Services.AddScoped<ICandidateRepository, CandidateRepository>();
+
+// Database Context
+builder.Services.AddDbContext<AppDbContext>(options =>
+    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 // Services
 builder.Services.AddScoped<ISkillService, SkillService>();
