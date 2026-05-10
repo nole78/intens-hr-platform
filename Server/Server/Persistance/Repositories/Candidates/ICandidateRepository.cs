@@ -1,7 +1,14 @@
-﻿namespace Server.Persistance.Repositories.Candidates
+﻿using Server.Domain.Models;
+
+namespace Server.Persistance.Repositories.Candidates
 {
     public interface ICandidateRepository
     {
-        // TODO: define methods for candidate managment in database
+        Task AddAsync(Candidate candidate);
+        Task DeleteAsync(Candidate candidate);
+        Task<bool> ExistsAsync(int id);
+        Task<Candidate?> GetByIdAsync(int id);
+        Task<List<Candidate>> SearchAsync(string? name, List<int>? skillIds);
+
     }
 }
