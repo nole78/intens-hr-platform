@@ -1,8 +1,21 @@
+using Server.Persistance.Repositories.Candidates;
+using Server.Persistance.Repositories.Skills;
+using Server.Services.CandidateService;
+using Server.Services.SkillService;
+
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+// Repositories
+builder.Services.AddScoped<ISkillRepository, SkillRepository>();
+builder.Services.AddScoped<ICandidateRepository, CandidateRepository>();
 
+// Services
+builder.Services.AddScoped<ISkillService, SkillService>();
+builder.Services.AddScoped<ICandidateService, CandidateService>();
+
+// Controllers
 builder.Services.AddControllers();
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
