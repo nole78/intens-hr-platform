@@ -6,15 +6,23 @@ namespace Server.Services.SkillService
 {
     public class SkillService : ISkillService
     {
-        // TODO: Implement the skill service
         private readonly ISkillRepository _skillRepository;
         public SkillService(ISkillRepository skillRepository)
         {
             _skillRepository = skillRepository;
         }
-        public Task<Skill> AddSkillAsync(CreateSkillDto dto)
+        public async Task<Skill> AddSkillAsync(CreateSkillDto dto)
         {
-            throw new NotImplementedException();
+            // TODO: implement Result pattern
+            var exists = await _skillRepository.GetByName(dto.Name);
+            if (exists.Id != 0)
+            {
+                throw new Exception("Skill already exists");
+            }
+            return await _skillRepository.AddSkill(new Skill
+            {
+                Name = dto.Name
+            });     
         }
     }
 }
