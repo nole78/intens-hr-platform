@@ -1,6 +1,5 @@
-﻿using Server.Common;
-using Server.Domain.DTOs;
-using Server.Domain.Models;
+﻿using Server.Domain.DTOs;
+using Server.Common;
 using Server.DTOs;
 
 namespace Server.Services.SkillService

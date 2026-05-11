@@ -1,8 +1,8 @@
-﻿using Server.Common;
-using Server.Domain.DTOs;
+﻿using Server.Domain.DTOs;
 using Server.Domain.Models;
 using Server.DTOs;
 using Server.Persistance.Repositories.Skills;
+using Server.Common;
 
 namespace Server.Services.SkillService
 {
