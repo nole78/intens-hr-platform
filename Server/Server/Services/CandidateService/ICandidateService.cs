@@ -6,7 +6,6 @@ namespace Server.Services.CandidateService
 {
     public interface ICandidateService
     {
-        // TODO: add Result pattern return types for all methods
         public Task<Result<Candidate>> AddCandidateAsync(CreateCandidateDto dto);
         public Task<Result> RemoveCandidateAsync(int id);
         public Task<Result<List<Candidate>>> GetCandidateAsync(string? name, List<int>? skillIds);
