@@ -3,6 +3,7 @@ using Server.Domain.Models;
 using Server.Domain.DTOs;
 using Server.Persistance.Repositories.Skills;
 using Moq;
+using Server.Common;
 
 namespace Tests
 {
@@ -39,7 +40,7 @@ namespace Tests
             Assert.That(result.IsSuccess, Is.True);
             Assert.That(result.Value, Is.Not.Null);
             Assert.That(result.Value!.Id, Is.EqualTo(expectedSkill.Id));
-            Assert.That(result.Value!.Name, Is.EqualTo(expectedSkill.Name));
+            Assert.That(result.Value.Name, Is.EqualTo(expectedSkill.Name));
         }
 
         [Test]
@@ -54,8 +55,8 @@ namespace Tests
 
             // Assert
             Assert.That(result.IsSuccess, Is.Not.True);
-            Assert.That(result.Value, Is.Null);
             Assert.That(result.Error, Is.EqualTo("Skill with the same name already exists"));
+            Assert.That(result.ErrorType, Is.EqualTo(ErrorType.Conflict));
         }
     }
 }
