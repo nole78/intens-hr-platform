@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Server.Domain.DTOs;
+using Server.Domain.Enums;
 using Server.Domain.Models;
 using Server.Services.SkillService;
 using System.Threading.Tasks;
@@ -21,13 +22,20 @@ namespace Server.Controllers
         [HttpPost]
         public async Task<ActionResult<Skill>> AddSkill([FromBody] CreateSkillDto dto)
         {
-            // TODO: improve with Result pattern return type and error handling
             var result = await _skillService.AddSkillAsync(dto);
-            if (result == null)
+            if(result.IsSucces)
             {
-                return BadRequest(new { message = "Couldn't create skill" });
+                return Ok(result.Value);
             }
-            return Ok(result);
+            else
+            {
+                return result.ErrorType switch
+                {
+                    ErrorType.NotFound => NotFound(new { message = result.Error }),
+                    ErrorType.Validation => BadRequest(new { message = result.Error }),
+                    _ => StatusCode(500, new { message = "An error occurred while creating the skill" })
+                };
+            }
         }
     }
 }
