@@ -20,7 +20,7 @@ namespace Server.Controllers
         public async Task<ActionResult<Skill>> AddSkill([FromBody] CreateSkillDto dto)
         {
             var result = await _skillService.AddSkillAsync(dto);
-            return ResultExstensions.ToActionResult(result);
+            return result.ToActionResult();
         }
     }
 }

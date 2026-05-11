@@ -4,7 +4,7 @@ namespace Server.Common
 {
     public static class ResultExstensions
     {
-        public static ActionResult ToActionResult(Result result)
+        public static ActionResult ToActionResult(this Result result)
         {
             if(result.IsSuccess)
             {
@@ -19,7 +19,7 @@ namespace Server.Common
             };
         }
 
-        public static ActionResult ToActionResult<T>(Result<T> result)
+        public static ActionResult ToActionResult<T>(this Result<T> result)
         {
             if (result.IsSuccess)
             {
