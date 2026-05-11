@@ -3,7 +3,6 @@ using Server.Common;
 using Server.Domain.DTOs;
 using Server.Domain.Models;
 using Server.Services.SkillService;
-using System.Threading.Tasks;
 
 namespace Server.Controllers
 {
@@ -12,7 +11,7 @@ namespace Server.Controllers
     public class SkillController : ControllerBase
     {
         // TODO: add validation services
-        ISkillService _skillService;
+        private readonly ISkillService _skillService;
         public SkillController(ISkillService skillService)
         {
             // TODO: add dependency injection for validation services

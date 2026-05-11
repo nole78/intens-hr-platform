@@ -1,11 +1,8 @@
-﻿using Microsoft.AspNetCore.Http.HttpResults;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Server.Common;
 using Server.Domain.DTOs;
 using Server.Domain.Models;
 using Server.Services.CandidateService;
-using System.ComponentModel.DataAnnotations;
-using System.Threading.Tasks;
 
 
 namespace Server.Controllers
