@@ -1,6 +1,7 @@
 ﻿using Server.Common;
 using Server.Domain.DTOs;
 using Server.Domain.Models;
+using Server.DTOs;
 using Server.Persistance.Repositories.Candidates;
 using Server.Persistance.Repositories.CandidateSkills;
 using Server.Persistance.Repositories.Skills;
@@ -19,12 +20,12 @@ namespace Server.Services.CandidateService
             _candidateSkillRepository = candidateSkillRepository;
             _skillRepository = skillRepository;
         }
-        public async Task<Result<Candidate>> AddCandidateAsync(CreateCandidateDto dto)
+        public async Task<Result<CandidateDto>> AddCandidateAsync(CreateCandidateDto dto)
         {
             var exists = await _candidateRepository.GetByEmailAsync(dto.Email);
             if (exists != null)
             {
-                return Result<Candidate>.Failure("Candidate with the same email already exists", ErrorType.Validation);
+                return Result<CandidateDto>.Failure("Candidate with the same email already exists", ErrorType.Validation);
             }
 
             var result = await _candidateRepository.AddAsync(new Candidate
@@ -37,11 +38,18 @@ namespace Server.Services.CandidateService
 
             if (result != null)
             {
-                return Result<Candidate>.Success(result);
+                return Result<CandidateDto>.Success(new CandidateDto
+                {
+                    Id = result.Id,
+                    Name = result.Name,
+                    ContactNumber = result.ContactNumber,
+                    Email = result.Email,
+                    DateOfBirth = result.DateOfBirth,
+                });
             }
             else
             {
-                return Result<Candidate>.Failure("Couldn't create candidate", ErrorType.Internal);
+                return Result<CandidateDto>.Failure("Couldn't create candidate", ErrorType.Internal);
             }
         }
 
@@ -70,20 +78,35 @@ namespace Server.Services.CandidateService
             return result ? Result.Success() : Result.Failure("Couldn't add skill to candidate", ErrorType.Internal);
         }
 
-        public async Task<Result<List<Candidate>>> GetCandidateAsync(string? name, List<int>? skillIds)
+        public async Task<Result<List<CandidateDto>>> GetCandidateAsync(string? name, List<int>? skillIds)
         {
             var result = await _candidateRepository.SearchAsync(name, skillIds);
             if (result == null)
             {
-                return Result<List<Candidate>>.Failure("Couldn't retrieve candidates", ErrorType.Internal);
+                return Result<List<CandidateDto>>.Failure("Couldn't retrieve candidates", ErrorType.Internal);
             }
-            else if (result.Count() > 0)
+            else if (result.Count() == 0)
             {
-                return Result<List<Candidate>>.Failure("No candidates found matching the criteria", ErrorType.NotFound);
+                return Result<List<CandidateDto>>.Failure("No candidates found matching the criteria", ErrorType.NotFound);
             }
             else
             {
-                return Result<List<Candidate>>.Success(result);
+                List<CandidateDto> candidates = result.Select(c => new CandidateDto
+                {
+                    Id = c.Id,
+                    Name = c.Name,
+                    ContactNumber = c.ContactNumber,
+                    Email = c.Email,
+                    DateOfBirth = c.DateOfBirth,
+                    Skills = c.CandidateSkills.Select(cs => new SkillDto
+                    {
+                        Id = cs.Skill.Id,
+                        Name = cs.Skill.Name
+                    }).ToList(),
+
+                }).ToList();
+
+                return Result<List<CandidateDto>>.Success(candidates);
             }
         }
 
