@@ -13,11 +13,11 @@ namespace Server.Services.SkillService
         {
             _skillRepository = skillRepository;
         }
-        public async Task<Result<CreateSkillResponsDto>> AddSkillAsync(CreateSkillDto dto)
+        public async Task<Result<SkillDto>> AddSkillAsync(CreateSkillDto dto)
         {
             var exists = await _skillRepository.GetByNameAsync(dto.Name);
             if (exists != null)
-                return Result<CreateSkillResponsDto>.Failure("Skill with the same name already exists", ErrorType.Validation);
+                return Result<SkillDto>.Failure("Skill with the same name already exists", ErrorType.Validation);
             
             var skill = await _skillRepository.AddSkillAsync(new Skill
             {
@@ -25,9 +25,9 @@ namespace Server.Services.SkillService
             });     
 
             if(skill != null)
-                return Result<CreateSkillResponsDto>.Success(new CreateSkillResponsDto { Id = skill.Id, Name = skill.Name});
+                return Result<SkillDto>.Success(new SkillDto { Id = skill.Id, Name = skill.Name});
             else
-                return Result<CreateSkillResponsDto>.Failure("Couldn't create skill",ErrorType.Internal);
+                return Result<SkillDto>.Failure("Couldn't create skill",ErrorType.Internal);
         }
     }
 }

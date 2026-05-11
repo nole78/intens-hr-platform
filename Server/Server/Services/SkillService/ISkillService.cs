@@ -7,6 +7,6 @@ namespace Server.Services.SkillService
 {
     public interface ISkillService
     {
-        public Task<Result<CreateSkillResponsDto>> AddSkillAsync(CreateSkillDto dto);
+        public Task<Result<SkillDto>> AddSkillAsync(CreateSkillDto dto);
     }
 }
