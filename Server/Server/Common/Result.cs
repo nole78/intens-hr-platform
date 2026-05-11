@@ -2,13 +2,13 @@
 {
     public class Result
     {
-        public bool IsSucces { get; }
+        public bool IsSuccess { get; }
         public string? Error { get; }
         public ErrorType? ErrorType { get; }
 
-        protected Result(bool isSucces, string? error, ErrorType? errorType)
+        protected Result(bool isSuccess, string? error, ErrorType? errorType)
         {
-            IsSucces = isSucces;
+            IsSuccess = isSuccess;
             Error = error;
             ErrorType = errorType;
         }
