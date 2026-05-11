@@ -13,18 +13,9 @@ namespace Server.Persistance.Context
         public DbSet<CandidateSkill> CandidateSkills { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<CandidateSkill>()
-                .HasKey(cs => new { cs.CandidateId, cs.SkillId });
-
-            modelBuilder.Entity<Candidate>()
-                .HasIndex(c => c.Email)
-                .IsUnique();
-
-            modelBuilder.Entity<Skill>()
-                .HasIndex(s => s.Name)
-                .IsUnique();
-
             base.OnModelCreating(modelBuilder);
+
+            modelBuilder.ApplyConfigurationsFromAssembly(typeof(AppDbContext).Assembly);
         }
     }
 }
