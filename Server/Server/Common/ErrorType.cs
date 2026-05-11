@@ -4,6 +4,7 @@
     {
         NotFound,
         Validation,
-        Internal
+        Internal,
+        Conflict
     }
 }
