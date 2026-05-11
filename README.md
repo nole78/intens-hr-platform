@@ -74,6 +74,7 @@ project/
 
 ```bash
 git clone https://github.com/nole78/intens-hr-platform.git
+cd intens-hr-platform
 ```
 
 ---
@@ -101,6 +102,7 @@ dotnet tool install --global dotnet-ef
 Inside `Server/Server/` run:
 
 ```bash
+cd Server/Server
 dotnet restore
 ```
 
@@ -121,6 +123,10 @@ dotnet ef database update
 ```bash
 dotnet run
 ```
+
+After starting the application, check the console output to find the correct URL (including the port).  
+**Swagger** will be available at:
+http://localhost:{port}/swagger
 
 ---
 
