@@ -1,5 +1,5 @@
-﻿using Server.Domain.DTOs;
-using Server.Domain.Enums;
+﻿using Server.Common;
+using Server.Domain.DTOs;
 using Server.Domain.Models;
 using Server.Persistance.Repositories.Skills;
 

@@ -1,11 +1,11 @@
-﻿using Server.Domain.DTOs;
+﻿using Server.Common;
+using Server.Domain.DTOs;
 using Server.Domain.Models;
 
 namespace Server.Services.SkillService
 {
     public interface ISkillService
     {
-        // TODO: improve skill service interface definition Task types and parameters
         public Task<Result<Skill>> AddSkillAsync(CreateSkillDto dto);
     }
 }
