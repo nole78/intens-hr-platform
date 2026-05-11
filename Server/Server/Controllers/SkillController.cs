@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Server.Common;
 using Server.Domain.DTOs;
-using Server.Domain.Enums;
 using Server.Domain.Models;
 using Server.Services.SkillService;
 using System.Threading.Tasks;
