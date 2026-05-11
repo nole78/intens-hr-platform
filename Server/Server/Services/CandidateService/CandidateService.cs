@@ -25,7 +25,7 @@ namespace Server.Services.CandidateService
             var exists = await _candidateRepository.GetByEmailAsync(dto.Email);
             if (exists != null)
             {
-                return Result<CandidateDto>.Failure("Candidate with the same email already exists", ErrorType.Validation);
+                return Result<CandidateDto>.Failure("Candidate with the same email already exists", ErrorType.Conflict);
             }
 
             var result = await _candidateRepository.AddAsync(new Candidate
@@ -36,21 +36,14 @@ namespace Server.Services.CandidateService
                 DateOfBirth = dto.DateOfBirth,
             });
 
-            if (result != null)
+            return Result<CandidateDto>.Success(new CandidateDto
             {
-                return Result<CandidateDto>.Success(new CandidateDto
-                {
-                    Id = result.Id,
-                    Name = result.Name,
-                    ContactNumber = result.ContactNumber,
-                    Email = result.Email,
-                    DateOfBirth = result.DateOfBirth,
-                });
-            }
-            else
-            {
-                return Result<CandidateDto>.Failure("Couldn't create candidate", ErrorType.Internal);
-            }
+                Id = result.Id,
+                Name = result.Name,
+                ContactNumber = result.ContactNumber,
+                Email = result.Email,
+                DateOfBirth = result.DateOfBirth,
+            });
         }
 
         public async Task<Result> AddSkillToCandidateAsync(int candidateId, int skillId)
@@ -58,19 +51,19 @@ namespace Server.Services.CandidateService
             var candidateExists = await _candidateRepository.ExistsAsync(candidateId);
             if (!candidateExists) 
             { 
-                return Result.Failure("Candidate doesn't exist", ErrorType.Validation);
+                return Result.Failure("Candidate doesn't exist", ErrorType.NotFound);
             }
 
             var skillExists = await _skillRepository.ExistsAsync(skillId);
             if (!skillExists) 
             {
-                return Result.Failure("Skill doesn't exist", ErrorType.Validation);
+                return Result.Failure("Skill doesn't exist", ErrorType.NotFound);
             }
 
             var connectionExists = await _candidateSkillRepository.ExistsAsync(candidateId, skillId);
             if (connectionExists) 
             {
-                return Result.Failure("Candidate already has the skill", ErrorType.Validation);
+                return Result.Failure("Candidate already has the skill", ErrorType.Conflict);
             }
 
             var result = await _candidateSkillRepository.AddCandidateSkillAsync(candidateId,skillId);
@@ -108,16 +101,10 @@ namespace Server.Services.CandidateService
 
         public async Task<Result> RemoveCandidateAsync(int id)
         {
-            var exists = await _candidateRepository.ExistsAsync(id);
-            if (!exists)
-            {
-                return Result.Failure("Candidate doesn't exist", ErrorType.Validation);
-            }
-
             var candidate = await _candidateRepository.GetByIdAsync(id);
             if (candidate == null)
             {
-                return Result.Failure("Candidate doesn't exist", ErrorType.Validation);
+                return Result.Failure("Candidate doesn't exist", ErrorType.NotFound);
             }
 
             var result = await _candidateRepository.DeleteAsync(candidate);
@@ -130,19 +117,19 @@ namespace Server.Services.CandidateService
             var candidateExists = await _candidateRepository.ExistsAsync(candidateId);
             if (!candidateExists)
             {
-                return Result.Failure("Candidate doesn't exist", ErrorType.Validation);
+                return Result.Failure("Candidate doesn't exist", ErrorType.NotFound);
             }
 
             var skillExists = await _skillRepository.ExistsAsync(skillId);
             if (!skillExists)
             {
-                return Result.Failure("Skill doesn't exist", ErrorType.Validation);
+                return Result.Failure("Skill doesn't exist", ErrorType.NotFound);
             }
 
             var connectionExists = await _candidateSkillRepository.ExistsAsync(candidateId, skillId);
             if (!connectionExists)
             {
-                return Result.Failure("Candidate doesn't have the skill", ErrorType.Validation);
+                return Result.Failure("Candidate doesn't have the skill", ErrorType.NotFound);
             }
 
             var result = await _candidateSkillRepository.DeleteCandidateSkillAsync(candidateId, skillId);
