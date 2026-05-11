@@ -17,7 +17,7 @@ namespace Server.Services.SkillService
         {
             var exists = await _skillRepository.GetByNameAsync(dto.Name);
             if (exists != null)
-                return Result<SkillDto>.Failure("Skill with the same name already exists", ErrorType.Validation);
+                return Result<SkillDto>.Failure("Skill with the same name already exists", ErrorType.Conflict);
             
             var skill = await _skillRepository.AddSkillAsync(new Skill
             {
