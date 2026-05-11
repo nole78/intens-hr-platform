@@ -1,4 +1,4 @@
-﻿namespace Server.Common.Result
+﻿namespace Server.Common
 {
     public class Result
     {

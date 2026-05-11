@@ -1,4 +1,4 @@
-﻿namespace Server.Common.Result.Result
+﻿namespace Server.Common
 {
     public enum ErrorType
     {

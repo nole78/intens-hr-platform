@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace Server.Common.Result
+namespace Server.Common
 {
     public static class ResultExstensions
     {
