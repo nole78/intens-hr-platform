@@ -1,4 +1,5 @@
 ﻿using Server.Domain.DTOs;
+using Server.Domain.Enums;
 using Server.Domain.Models;
 using Server.Persistance.Repositories.Skills;
 
@@ -11,18 +12,21 @@ namespace Server.Services.SkillService
         {
             _skillRepository = skillRepository;
         }
-        public async Task<Skill> AddSkillAsync(CreateSkillDto dto)
+        public async Task<Result<Skill>> AddSkillAsync(CreateSkillDto dto)
         {
-            // TODO: implement Result pattern
             var exists = await _skillRepository.GetByNameAsync(dto.Name);
             if (exists != null)
-            {
-                throw new Exception("Skill already exists");
-            }
-            return await _skillRepository.AddSkillAsync(new Skill
+                return Result<Skill>.Failure("Skill with the same name already exists", ErrorType.Validation);
+            
+            var skill = await _skillRepository.AddSkillAsync(new Skill
             {
                 Name = dto.Name
             });     
+
+            if(skill != null)
+                return Result<Skill>.Success(skill);
+            else
+                return Result<Skill>.Failure("Couldn't create skill",ErrorType.Internal);
         }
     }
 }

@@ -6,6 +6,6 @@ namespace Server.Services.SkillService
     public interface ISkillService
     {
         // TODO: improve skill service interface definition Task types and parameters
-        public Task<Skill> AddSkillAsync(CreateSkillDto dto);
+        public Task<Result<Skill>> AddSkillAsync(CreateSkillDto dto);
     }
 }
