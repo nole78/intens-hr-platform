@@ -8,7 +8,7 @@ using Server.Persistance.Repositories.CandidateSkills;
 using Server.Common;
 using Server.Domain.DTOs;
 
-namespace Tests
+namespace Tests.Services
 {
     [TestFixture]
     class CandidateServiceTests

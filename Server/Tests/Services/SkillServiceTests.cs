@@ -5,7 +5,7 @@ using Server.Persistance.Repositories.Skills;
 using Moq;
 using Server.Common;
 
-namespace Tests
+namespace Tests.Services
 {
     [TestFixture]
     public class SkillServiceTests
