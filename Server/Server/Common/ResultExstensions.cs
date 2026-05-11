@@ -15,6 +15,7 @@ namespace Server.Common
             {
                 ErrorType.Validation => new BadRequestObjectResult(new { message = result.Error }),
                 ErrorType.NotFound => new NotFoundObjectResult(new { message = result.Error }),
+                ErrorType.Conflict => new ConflictObjectResult(new { message = result.Error }),
                 _ => new ObjectResult(new { message = result.Error }) { StatusCode = 500 }
             };
         }
