@@ -81,11 +81,7 @@ namespace Server.Services.CandidateService
         public async Task<Result<List<CandidateDto>>> GetCandidateAsync(string? name, List<int>? skillIds)
         {
             var result = await _candidateRepository.SearchAsync(name, skillIds);
-            if (result == null)
-            {
-                return Result<List<CandidateDto>>.Failure("Couldn't retrieve candidates", ErrorType.Internal);
-            }
-            else if (result.Count() == 0)
+            if (result.Count() == 0)
             {
                 return Result<List<CandidateDto>>.Failure("No candidates found matching the criteria", ErrorType.NotFound);
             }
