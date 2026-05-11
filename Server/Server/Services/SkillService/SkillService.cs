@@ -1,6 +1,7 @@
 ﻿using Server.Common;
 using Server.Domain.DTOs;
 using Server.Domain.Models;
+using Server.DTOs;
 using Server.Persistance.Repositories.Skills;
 
 namespace Server.Services.SkillService
@@ -12,11 +13,11 @@ namespace Server.Services.SkillService
         {
             _skillRepository = skillRepository;
         }
-        public async Task<Result<Skill>> AddSkillAsync(CreateSkillDto dto)
+        public async Task<Result<CreateSkillResponsDto>> AddSkillAsync(CreateSkillDto dto)
         {
             var exists = await _skillRepository.GetByNameAsync(dto.Name);
             if (exists != null)
-                return Result<Skill>.Failure("Skill with the same name already exists", ErrorType.Validation);
+                return Result<CreateSkillResponsDto>.Failure("Skill with the same name already exists", ErrorType.Validation);
             
             var skill = await _skillRepository.AddSkillAsync(new Skill
             {
@@ -24,9 +25,9 @@ namespace Server.Services.SkillService
             });     
 
             if(skill != null)
-                return Result<Skill>.Success(skill);
+                return Result<CreateSkillResponsDto>.Success(new CreateSkillResponsDto { Id = skill.Id, Name = skill.Name});
             else
-                return Result<Skill>.Failure("Couldn't create skill",ErrorType.Internal);
+                return Result<CreateSkillResponsDto>.Failure("Couldn't create skill",ErrorType.Internal);
         }
     }
 }
