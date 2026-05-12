@@ -128,6 +128,11 @@ After starting the application, check the console output to find the correct URL
 **Swagger** will be available at:
 http://localhost:{port}/swagger
 
+### 7. Run tests
+
+```bash
+dotnet test ../Tests/Tests.csproj
+```
 ---
 
 ## Database Design
