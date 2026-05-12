@@ -8,7 +8,7 @@ namespace Server.Common
         {
             if(result.IsSuccess)
             {
-                return new NoContentResult();
+                return new OkObjectResult();
             }
 
             return result.ErrorType switch
